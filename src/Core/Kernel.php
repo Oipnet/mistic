@@ -27,10 +27,14 @@ class Kernel
      */
     private $dispatcher;
 
-    public function __construct()
+    /**
+     * Kernel constructor.
+     * @param null|ResponseInterface $response
+     */
+    public function __construct(?ResponseInterface $response = null)
     {
         $this->request = ServerRequest::fromGlobals();
-        $this->response = new Response();
+        $this->response = ($response)?:new Response();
 
         $this->dispatcher = new Dispatcher();
         $this->dispatcher->pipe(\App\Middleware\FormatNegociatorMiddleware::class);
@@ -44,6 +48,14 @@ class Kernel
      * Run your application
      */
     public function run() {
+        $this->sendResponse();
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
+    protected function sendResponse(): void
+    {
         \Http\Response\send($this->dispatcher->process($this->request));
     }
 }
