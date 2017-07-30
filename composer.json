@@ -1,0 +1,25 @@
+{
+    "name": "oipnet/mistic",
+    "description": "My personal framework",
+    "type": "project",
+    "version": "0.0.1",
+    "authors": [
+        {
+            "name": "Arnaud POINTET",
+            "email": "arnaud.pointet@gmail.com"
+        }
+    ],
+    "require": {
+        "http-interop/http-middleware": "^0.4.1",
+        "guzzlehttp/psr7": "^1.4",
+        "http-interop/response-sender": "^1.0",
+        "willdurand/negotiation": "^2.3",
+        "phpunit/phpunit": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Core\\": "src/Core",
+            "App\\": "src/"
+        }
+    }
+}
