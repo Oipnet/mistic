@@ -10,9 +10,10 @@ namespace Core;
 
 
 use App\Middleware\Exceptions\MiddlewareNotFound;
-use GuzzleHttp\Psr7\Response;
+use DI\Definition\Exception\DefinitionException;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -21,10 +22,15 @@ class Dispatcher implements DelegateInterface
     private $middlewares = [];
     private $index = 0;
     private $response;
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
 
-    public function __construct()
+    public function __construct(ResponseInterface $response, ContainerInterface $container)
     {
-        $this->response = new Response();
+        $this->response = $response;
+        $this->container = $container;
     }
 
     /**
@@ -33,7 +39,11 @@ class Dispatcher implements DelegateInterface
     public function pipe($middleware)
     {
         if (is_string($middleware )) {
-            $middleware = new $middleware();
+            try {
+                $middleware = $this->container->get($middleware);
+            } catch (DefinitionException $e) {
+                throw new MiddlewareNotFound($middleware. ' can\'t be load');
+            }
         }
 
         if (! $middleware instanceof MiddlewareInterface) {
@@ -41,7 +51,6 @@ class Dispatcher implements DelegateInterface
         }
 
         $this->middlewares[] = $middleware;
-        $this->response = new Response();
     }
 
 

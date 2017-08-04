@@ -17,6 +17,15 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class RouterMiddleware implements MiddlewareInterface
 {
+    /**
+     * @var ResponseInterface
+     */
+    private $response;
+
+    public function __construct(ResponseInterface $response)
+    {
+        $this->response = $response;
+    }
 
     /**
      * Process an incoming server request and return a response, optionally delegating
@@ -39,11 +48,12 @@ class RouterMiddleware implements MiddlewareInterface
             return $delegate->process($request);
         } /*elseif ($url === '/contact') {
             $response->getBody()->write('Me contacter');
-        } else {
-            $response->getBody()->write('Ooops 404');
-            $response = $response->withStatus(404);
-        }*/
+        } */else {
+            $this->response->getBody()->write('Ooops 404');
 
-        return $delegate->process($request);;
+            return $this->response->withStatus(404);
+        }
+
+        return $delegate->process($request);
     }
 }

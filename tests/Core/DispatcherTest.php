@@ -14,7 +14,10 @@ class DispatcherTest extends TestCase
 
     public function setUp()
     {
-        $this->dispatcher = new \Core\Dispatcher();
+        $container = \DI\ContainerBuilder::buildDevContainer();
+        $container->set(ResponseInterface::class, new \GuzzleHttp\Psr7\Response());
+
+        $this->dispatcher = new \Core\Dispatcher($container->get(ResponseInterface::class), $container);
     }
 
     /**
