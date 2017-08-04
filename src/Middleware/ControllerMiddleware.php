@@ -7,6 +7,10 @@ use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class ControllerMiddleware
+ * @package App\Middleware
+ */
 class ControllerMiddleware implements MiddlewareInterface
 {
 

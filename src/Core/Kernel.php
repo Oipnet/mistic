@@ -2,6 +2,12 @@
 
 namespace Core;
 
+use App\Middleware\ControllerMiddleware;
+use App\Middleware\FormatNegociatorMiddleware;
+use App\Middleware\GoogleAnalyticsMiddleware;
+use App\Middleware\PoweredByMiddleware;
+use App\Middleware\RouterMiddleware;
+use App\Middleware\TraillingSlashMiddleware;
 use DI\ContainerBuilder;
 use GuzzleHttp\Psr7\Response;
 use Psr\Container\ContainerInterface;
@@ -53,22 +59,26 @@ class Kernel
 
 
         $this->dispatcher = new Dispatcher($this->getContainer()->get(ResponseInterface::class), $this->container);
-        $this->dispatcher->pipe(\App\Middleware\FormatNegociatorMiddleware::class);
-        $this->dispatcher->pipe(\App\Middleware\TraillingSlashMiddleware::class);
-        $this->dispatcher->pipe(\App\Middleware\PoweredByMiddleware::class);
-        $this->dispatcher->pipe(\App\Middleware\GoogleAnalyticsMiddleware::class);
-        $this->dispatcher->pipe(\App\Middleware\RouterMiddleware::class);
-        $this->dispatcher->pipe(\App\Middleware\ControllerMiddleware::class);
+        $this->dispatcher->pipe(FormatNegociatorMiddleware::class);
+        $this->dispatcher->pipe(TraillingSlashMiddleware::class);
+        $this->dispatcher->pipe(PoweredByMiddleware::class);
+        $this->dispatcher->pipe(GoogleAnalyticsMiddleware::class);
+        $this->dispatcher->pipe(RouterMiddleware::class);
+        $this->dispatcher->pipe(ControllerMiddleware::class);
     }
 
     /**
      * Run your application
+     * @return ResponseInterface
      */
-    public function run()
+    public function run(): ResponseInterface
     {
         return $this->response;
     }
 
+    /**
+     * @return ContainerInterface
+     */
     public function getContainer(): ContainerInterface
     {
         return $this->container;

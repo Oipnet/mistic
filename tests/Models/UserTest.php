@@ -2,6 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class UserTest
+ */
 class UserTest extends TestCase
 {
 

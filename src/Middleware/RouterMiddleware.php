@@ -8,6 +8,10 @@ use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class RouterMiddleware
+ * @package App\Middleware
+ */
 class RouterMiddleware implements MiddlewareInterface
 {
     /**
@@ -15,6 +19,10 @@ class RouterMiddleware implements MiddlewareInterface
      */
     private $response;
 
+    /**
+     * RouterMiddleware constructor.
+     * @param ResponseInterface $response
+     */
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
@@ -39,12 +47,10 @@ class RouterMiddleware implements MiddlewareInterface
             $request = $request->withAttribute('controller', BlogController::class);
             $request = $request->withAttribute('action', 'index');
             return $delegate->process($request);
-        } else {
-            $this->response->getBody()->write('Ooops 404');
-
-            return $this->response->withStatus(404);
         }
 
-        return $delegate->process($request);
+        $this->response->getBody()->write('Ooops 404');
+
+        return $this->response->withStatus(404);
     }
 }

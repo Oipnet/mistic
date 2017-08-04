@@ -10,6 +10,10 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class Dispatcher
+ * @package Core
+ */
 class Dispatcher implements DelegateInterface
 {
     private $middlewares = [];
@@ -20,6 +24,11 @@ class Dispatcher implements DelegateInterface
      */
     private $container;
 
+    /**
+     * Dispatcher constructor.
+     * @param ResponseInterface $response
+     * @param ContainerInterface $container
+     */
     public function __construct(ResponseInterface $response, ContainerInterface $container)
     {
         $this->response = $response;
@@ -28,6 +37,7 @@ class Dispatcher implements DelegateInterface
 
     /**
      * @param MiddlewareInterface|string $middleware
+     * @throws MiddlewareNotFound
      */
     public function pipe($middleware)
     {
@@ -49,7 +59,6 @@ class Dispatcher implements DelegateInterface
 
     /**
      * @param ServerRequestInterface $request
-     * @param ResponseInterface $response
      * @return ResponseInterface
      */
     public function process(ServerRequestInterface $request): ResponseInterface
@@ -64,6 +73,9 @@ class Dispatcher implements DelegateInterface
         return $middleware->process($request, $this);
     }
 
+    /**
+     * @return MiddlewareInterface|null
+     */
     private function getMiddleware()
     {
         if (isset($this->middlewares[$this->index])) {
