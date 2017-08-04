@@ -2,12 +2,10 @@
 
 namespace Core;
 
-use App\Middleware\RouterMiddleware;
-use DI\Container;
 use DI\ContainerBuilder;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -41,10 +39,7 @@ class Kernel
      */
     public function __construct(?ResponseInterface $response = null, ?ContainerInterface $container = null)
     {
-        $this->request = ServerRequest::fromGlobals();
-        $this->response = ($response)?:new Response();
         $this->container = $container;
-
         if (! $this->container) {
             $containerBuilder = new ContainerBuilder();
             //$containerBuilder->useAutowiring(true);
@@ -52,6 +47,10 @@ class Kernel
 
             $this->container = $containerBuilder->build();
         }
+
+        $this->request = $this->container->get(RequestInterface::class);
+        $this->response = ($response)?:new Response();
+
 
         $this->dispatcher = new Dispatcher($this->getContainer()->get(ResponseInterface::class), $this->container);
         $this->dispatcher->pipe(\App\Middleware\FormatNegociatorMiddleware::class);
@@ -65,16 +64,9 @@ class Kernel
     /**
      * Run your application
      */
-    public function run() {
-        $this->sendResponse();
-    }
-
-    /**
-     * @codeCoverageIgnore
-     */
-    protected function sendResponse(): void
+    public function run()
     {
-        \Http\Response\send($this->dispatcher->process($this->request));
+        return $this->response;
     }
 
     public function getContainer(): ContainerInterface

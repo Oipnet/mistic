@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudp
- * Date: 29/07/17
- * Time: 15:02
- */
 
 namespace App\Middleware;
-
 
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
@@ -101,11 +94,11 @@ class FormatNegociatorMiddleware implements MiddlewareInterface
         return $response;
     }
 
-    private function getFromExtension(ServerRequestInterface $request) {
+    private function getFromExtension(ServerRequestInterface $request)
+    {
         $extension = strtolower(pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION));
 
         if (empty($extension)) {
-
             return;
         }
 

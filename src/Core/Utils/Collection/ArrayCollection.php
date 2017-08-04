@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudp
- * Date: 30/07/17
- * Time: 10:27
- */
 
 namespace Core\Utils\Collection;
-
 
 use ArrayIterator;
 use IteratorAggregate;
@@ -81,7 +74,8 @@ class ArrayCollection implements CollectionInterface, IteratorAggregate, JsonSer
         return $this;
     }
 
-    public function toJson() {
+    public function toJson()
+    {
         return json_encode($this);
     }
 

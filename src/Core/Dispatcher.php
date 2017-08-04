@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudp
- * Date: 29/07/17
- * Time: 14:14
- */
 
 namespace Core;
-
 
 use App\Middleware\Exceptions\MiddlewareNotFound;
 use DI\Definition\Exception\DefinitionException;
@@ -38,7 +31,7 @@ class Dispatcher implements DelegateInterface
      */
     public function pipe($middleware)
     {
-        if (is_string($middleware )) {
+        if (is_string($middleware)) {
             try {
                 $middleware = $this->container->get($middleware);
             } catch (DefinitionException $e) {
@@ -74,7 +67,6 @@ class Dispatcher implements DelegateInterface
     private function getMiddleware()
     {
         if (isset($this->middlewares[$this->index])) {
-
             return $this->middlewares[$this->index];
         }
 

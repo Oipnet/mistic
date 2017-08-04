@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudp
- * Date: 29/07/17
- * Time: 14:28
- */
 
 namespace App\Middleware;
-
 
 use function GuzzleHttp\Psr7\stream_for;
 use Interop\Http\ServerMiddleware\DelegateInterface;
@@ -32,7 +25,6 @@ class GoogleAnalyticsMiddleware implements MiddlewareInterface
         $response = $delegate->process($request);
 
         if ($request->getAttribute(FormatNegociatorMiddleware::KEY) !== 'html') {
-
             return $response;
         }
 

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudp
- * Date: 29/07/17
- * Time: 13:43
- */
 
 namespace App\Middleware;
-
 
 use App\Controller\BlogController;
 use Interop\Http\ServerMiddleware\DelegateInterface;
@@ -46,9 +39,7 @@ class RouterMiddleware implements MiddlewareInterface
             $request = $request->withAttribute('controller', BlogController::class);
             $request = $request->withAttribute('action', 'index');
             return $delegate->process($request);
-        } /*elseif ($url === '/contact') {
-            $response->getBody()->write('Me contacter');
-        } */else {
+        } else {
             $this->response->getBody()->write('Ooops 404');
 
             return $this->response->withStatus(404);

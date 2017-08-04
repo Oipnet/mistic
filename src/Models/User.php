@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-
 use App\Exceptions\InvalidEmailFormatException;
 
 class User
@@ -25,7 +24,8 @@ class User
     /**
      * @return string
      */
-    public function getFirstName(): string {
+    public function getFirstName(): string
+    {
         return $this->firstName;
     }
 
@@ -81,7 +81,8 @@ class User
     /**
      * @return array
      */
-    public function getEmailVariables(): array {
+    public function getEmailVariables(): array
+    {
         return [
             'full_name' => $this->getFullName(),
             'email' => $this->getEmail(),
