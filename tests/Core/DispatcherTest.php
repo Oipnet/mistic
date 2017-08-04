@@ -2,6 +2,8 @@
 use App\Middleware\Exceptions\MiddlewareNotFound;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class DispatcherTest extends TestCase
 {
@@ -10,15 +12,9 @@ class DispatcherTest extends TestCase
      */
     private $dispatcher;
 
-    /**
-     * @var \Prophecy\Prophet
-     */
-    private $prophet;
-
     public function setUp()
     {
         $this->dispatcher = new \Core\Dispatcher();
-        $this->prophet = new \Prophecy\Prophet();
     }
 
     /**
@@ -75,6 +71,39 @@ class DispatcherTest extends TestCase
         $middlewareClass = get_class($middleware);
 
         $this->dispatcher->pipe($middlewareClass);
+    }
+
+    /**
+     * @test
+     */
+    public function process_should_return_a_response_when_there_is_no_middleware()
+    {
+        $request = $this->getMockBuilder(ServerRequestInterface::class)
+            ->getMock();
+
+        $this->assertInstanceOf(ResponseInterface::class, $this->dispatcher->process($request));
+    }
+
+    /**
+     * @test
+     */
+    public function procces_should_return_a_response_modified_by_middleware()
+    {
+        $middleware = $this->getMockBuilder(MiddlewareInterface::class)
+            ->getMock();
+
+        $middleware->method('process')
+            ->willReturn(new \GuzzleHttp\Psr7\Response(999));
+
+        $request = $this->getMockBuilder(ServerRequestInterface::class)
+            ->getMock();
+
+        $this->dispatcher->pipe($middleware);
+
+        $response = $this->dispatcher->process($request);
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(999, $response->getStatusCode());
     }
 
 }

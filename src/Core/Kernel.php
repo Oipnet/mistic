@@ -42,6 +42,7 @@ class Kernel
         $this->dispatcher->pipe(\App\Middleware\PoweredByMiddleware::class);
         $this->dispatcher->pipe(\App\Middleware\GoogleAnalyticsMiddleware::class);
         $this->dispatcher->pipe(\App\Middleware\RouterMiddleware::class);
+        $this->dispatcher->pipe(\App\Middleware\ControllerMiddleware::class);
     }
 
     /**

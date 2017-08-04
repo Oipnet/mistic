@@ -22,6 +22,11 @@ class Dispatcher implements DelegateInterface
     private $index = 0;
     private $response;
 
+    public function __construct()
+    {
+        $this->response = new Response();
+    }
+
     /**
      * @param MiddlewareInterface|string $middleware
      */

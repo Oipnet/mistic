@@ -9,6 +9,7 @@
 namespace App\Middleware;
 
 
+use App\Controller\BlogController;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -28,19 +29,21 @@ class RouterMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, DelegateInterface $delegate): ResponseInterface
     {
-        $response = $delegate->process($request);
+        //$response = $delegate->process($request);
 
         $url = $request->getUri()->getPath();
 
         if ($url === '/blog') {
-            $response->getBody()->write('<body>Je suis sur le blog</body>');
-        } elseif ($url === '/contact') {
+            $request = $request->withAttribute('controller', BlogController::class);
+            $request = $request->withAttribute('action', 'index');
+            return $delegate->process($request);
+        } /*elseif ($url === '/contact') {
             $response->getBody()->write('Me contacter');
         } else {
             $response->getBody()->write('Ooops 404');
             $response = $response->withStatus(404);
-        }
+        }*/
 
-        return $response;
+        return $delegate->process($request);;
     }
 }
