@@ -5,10 +5,13 @@ namespace App\Middleware;
 use function GuzzleHttp\Psr7\stream_for;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class GoogleAnalyticsMiddleware
+ * @package App\Middleware
+ */
 class GoogleAnalyticsMiddleware implements MiddlewareInterface
 {
     /**
@@ -29,7 +32,7 @@ class GoogleAnalyticsMiddleware implements MiddlewareInterface
         }
 
         $body = (string) $response->getBody();
-        $tag = "<ga></ga>";
+        $tag = "<div class='google_analytics'></div>";
         $body = str_replace('</body>', $tag.'</body>', $body);
         $body = stream_for($body);
 

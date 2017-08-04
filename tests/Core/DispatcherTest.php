@@ -1,10 +1,13 @@
 <?php
-use App\Middleware\Exceptions\MiddlewareNotFound;
+
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class DispatcherTest
+ */
 class DispatcherTest extends TestCase
 {
     /**

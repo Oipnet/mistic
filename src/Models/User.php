@@ -4,6 +4,10 @@ namespace App\Models;
 
 use App\Exceptions\InvalidEmailFormatException;
 
+/**
+ * Class User
+ * @package App\Models
+ */
 class User
 {
     protected $firstName;
@@ -66,6 +70,8 @@ class User
 
     /**
      * @param string $email
+     * @return User
+     * @throws InvalidEmailFormatException
      */
     public function setEmail($email)
     {

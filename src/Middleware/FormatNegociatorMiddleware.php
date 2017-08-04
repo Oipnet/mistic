@@ -9,6 +9,10 @@ use Negotiation\Negotiator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class FormatNegociatorMiddleware
+ * @package App\Middleware
+ */
 class FormatNegociatorMiddleware implements MiddlewareInterface
 {
     const KEY = 'FORMAT';
@@ -94,12 +98,16 @@ class FormatNegociatorMiddleware implements MiddlewareInterface
         return $response;
     }
 
-    private function getFromExtension(ServerRequestInterface $request)
+    /**
+     * @param ServerRequestInterface $request
+     * @return string|null
+     */
+    private function getFromExtension(ServerRequestInterface $request): ?string
     {
         $extension = strtolower(pathinfo($request->getUri()->getPath(), PATHINFO_EXTENSION));
 
         if (empty($extension)) {
-            return;
+            return null;
         }
 
         foreach ($this->formats as $format => $data) {
@@ -107,9 +115,15 @@ class FormatNegociatorMiddleware implements MiddlewareInterface
                 return $format;
             }
         }
+
+        return null;
     }
 
-    private function getFromHeader($request)
+    /**
+     * @param $request
+     * @return int|string
+     */
+    private function getFromHeader($request): ?string
     {
         $headers = call_user_func_array('array_merge', array_column($this->formats, 1));
         $mime = $this->negotiateHeader($request->getHeaderLine('Accept'), new Negotiator(), $headers);
@@ -120,20 +134,30 @@ class FormatNegociatorMiddleware implements MiddlewareInterface
                 }
             }
         }
+
+        return null;
     }
 
-    private function negotiateHeader($accept, AbstractNegotiator $negotiator, array $priorities)
+    /**
+     * @param $accept
+     * @param AbstractNegotiator $negotiator
+     * @param array $priorities
+     * @return null|string
+     */
+    private function negotiateHeader($accept, AbstractNegotiator $negotiator, array $priorities): ?string
     {
         if (empty($accept) || empty($priorities)) {
-            return;
+            return null;
         }
         try {
             $best = $negotiator->getBest($accept, $priorities);
         } catch (\Exception $exception) {
-            return;
+            return null;
         }
         if ($best) {
             return $best->getValue();
         }
+
+        return null;
     }
 }

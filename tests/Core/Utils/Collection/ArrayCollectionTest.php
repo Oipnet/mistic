@@ -1,14 +1,22 @@
 <?php
 
+namespace Test\Core\Utils\Collection;
 
-class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
+use Core\Utils\Collection\ArrayCollection;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Class ArrayCollectionTest
+ * @package Test\Core\Utils\Collection
+ */
+class ArrayCollectionTest extends TestCase
 {
     /**
      * @test
      */
-    public function empty_collection_return_no_items()
+    public function emptyCollectionReturnNoItems()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection;
+        $collection = new ArrayCollection;
 
         $this->assertEmpty($collection->all());
     }
@@ -16,9 +24,9 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function all_return_all_elements_of_collection()
+    public function allMethodReturnAllElementsOfCollection()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection([
+        $collection = new ArrayCollection([
             'one', 'two', 'three'
         ]);
 
@@ -33,7 +41,7 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function count_is_zero_when_collection_is_empty()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection;
+        $collection = new ArrayCollection;
 
         $this->assertEquals($collection->count(), 0);
     }
@@ -43,7 +51,7 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function count_is_correct_for_items_passed_in()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection([
+        $collection = new ArrayCollection([
             'one', 'two', 'three'
         ]);
 
@@ -55,11 +63,11 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function collection_is_instance_of_iterator_aggregate()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection([
+        $collection = new ArrayCollection([
             'one', 'two', 'three'
         ]);
 
-        $this->assertInstanceOf(IteratorAggregate::class, $collection);
+        $this->assertInstanceOf(ArrayCollection::class, $collection);
     }
 
     /**
@@ -67,7 +75,7 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function collection_can_be_iterated()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection([
+        $collection = new ArrayCollection([
             'one', 'two', 'three'
         ]);
 
@@ -78,7 +86,7 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
         }
 
         $this->assertCount(3, $items);
-        $this->assertInstanceOf(ArrayIterator::class, $collection->getIterator());
+        $this->assertInstanceOf(\ArrayIterator::class, $collection->getIterator());
     }
 
     /**
@@ -86,10 +94,10 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function collection_can_be_merged()
     {
-        $collection1 = new \Core\Utils\Collection\ArrayCollection([
+        $collection1 = new ArrayCollection([
             'one', 'two'
         ]);
-        $collection2 = new \Core\Utils\Collection\ArrayCollection([
+        $collection2 = new ArrayCollection([
             'three', 'four'
         ]);
 
@@ -103,10 +111,10 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function can_add_collection_to_existing_collection()
     {
-        $collection1 = new \Core\Utils\Collection\ArrayCollection([
+        $collection1 = new ArrayCollection([
             'one', 'two'
         ]);
-        $collection2 = new \Core\Utils\Collection\ArrayCollection([
+        $collection2 = new ArrayCollection([
             'three', 'four'
         ]);
 
@@ -122,7 +130,7 @@ class ArrayCollectionTest extends \PHPUnit\Framework\TestCase
      */
     public function return_json_encoded_items()
     {
-        $collection = new \Core\Utils\Collection\ArrayCollection([
+        $collection = new ArrayCollection([
             [ 'username' => 'alex'],
             [ 'username' => 'billy'],
         ]);

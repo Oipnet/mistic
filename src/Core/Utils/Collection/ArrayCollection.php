@@ -20,6 +20,7 @@ class ArrayCollection implements CollectionInterface, IteratorAggregate, JsonSer
 
     /**
      * ArrayCollection constructor.
+     * @param array $items
      */
     public function __construct($items = [])
     {
@@ -63,6 +64,10 @@ class ArrayCollection implements CollectionInterface, IteratorAggregate, JsonSer
         return $this->add($collection);
     }
 
+    /**
+     * @param CollectionInterface|object $items
+     * @return CollectionInterface
+     */
     public function add($items): CollectionInterface
     {
         if ($items instanceof CollectionInterface) {
@@ -74,6 +79,9 @@ class ArrayCollection implements CollectionInterface, IteratorAggregate, JsonSer
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function toJson()
     {
         return json_encode($this);

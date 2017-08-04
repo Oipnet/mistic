@@ -1,6 +1,9 @@
 <?php
 
 
+/**
+ * Class KernelTest
+ */
 class KernelTest extends \PHPUnit\Framework\TestCase
 {
     /**

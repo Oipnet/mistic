@@ -8,6 +8,10 @@ use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Class TraillingSlashMiddleware
+ * @package App\Middleware
+ */
 class TraillingSlashMiddleware implements MiddlewareInterface
 {
 

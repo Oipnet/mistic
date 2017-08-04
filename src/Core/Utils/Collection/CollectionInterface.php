@@ -2,6 +2,10 @@
 
 namespace Core\Utils\Collection;
 
+/**
+ * Interface CollectionInterface
+ * @package Core\Utils\Collection
+ */
 interface CollectionInterface
 {
 
