@@ -11,4 +11,6 @@ require dirname(__DIR__).'/vendor/autoload.php';
 $app = new Kernel();
 
 
-$app->run();
+$response = $app->run();
+
+\Http\Response\send($response);

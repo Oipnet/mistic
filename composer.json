@@ -9,6 +9,9 @@
             "email": "arnaud.pointet@gmail.com"
         }
     ],
+    "scripts": {
+        "phpcs": "phpcs"
+    },
     "require": {
         "http-interop/http-middleware": "^0.4.1",
         "guzzlehttp/psr7": "^1.4",
@@ -23,5 +26,8 @@
             "Core\\": "src/Core",
             "App\\": "src/"
         }
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.0"
     }
 }

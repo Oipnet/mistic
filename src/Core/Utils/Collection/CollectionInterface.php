@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arnaudp
- * Date: 30/07/17
- * Time: 10:28
- */
 
 namespace Core\Utils\Collection;
-
 
 interface CollectionInterface
 {

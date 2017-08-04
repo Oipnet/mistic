@@ -25,16 +25,8 @@ class KernelTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function run_kernell_should_call_http_response_send()
+    public function run_kernell_should_return_a_response()
     {
-        $stub = $this
-            ->getMockBuilder(\Core\Kernel::class)
-            ->setMethods(['sendResponse'])
-            ->getMock()
-        ;
-
-        $stub->expects($this->once())->method('sendResponse');
-
-        $stub->run();
+        $this->assertInstanceOf(\Psr\Http\Message\ResponseInterface::class, $this->kernel->run());
     }
 }
