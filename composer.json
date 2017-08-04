@@ -14,7 +14,9 @@
         "guzzlehttp/psr7": "^1.4",
         "http-interop/response-sender": "^1.0",
         "willdurand/negotiation": "^2.3",
-        "phpunit/phpunit": "^6.2"
+        "phpunit/phpunit": "^6.2",
+        "php-di/php-di": "^5.4",
+        "ocramius/proxy-manager": "^2.1"
     },
     "autoload": {
         "psr-4": {

@@ -19,6 +19,7 @@ class KernelTest extends \PHPUnit\Framework\TestCase
     public function initialisation_is_instance_of_kernel()
     {
         $this->assertInstanceOf(\Core\Kernel::class, $this->kernel);
+        $this->assertInstanceOf(\Psr\Container\ContainerInterface::class, $this->kernel->getContainer());
     }
 
     /**
